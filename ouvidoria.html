@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Pesquisa de Satisfação – Ouvidoria Unimed</title>
+
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f5;
+    color: #2E2E2E;
+}
+
+.form-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+h2 {
+    color: #00995D;
+    margin-bottom: 10px;
+}
+
+.question {
+    margin-bottom: 26px;
+}
+
+.question label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.hidden { display: none; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.period-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.protocol-box {
+    background: #f9f9f9;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 26px;
+}
+
+.emoji-container {
+    display: flex;
+    gap: 5rem; /* espaçamento entre emojis */
+    margin: 10px 0 20px 70px;
+}
+
+.emoji:hover {
+    filter: brightness(0.95);
+}
+
+
+.emoji {
+    font-size: 40px;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    opacity: 0.6;
+}
+
+.emoji.active {
+    opacity: 10;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* cores semânticas */
+.red { background: #f8d7da; }
+.orange { background: #ffe5b4; }
+.yellow { background: #fff3cd; }
+.light-green { background: #a0e5b0; }
+.green { background: #5cb170; }
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.chip {
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #00995D;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.chip.active {
+    background: #00995D;
+    color: #fff;
+}
+
+.guidance-box {
+    background: #f7f7f7;
+    border-left: 4px solid #00995D;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #00995D;
+    color: #fff;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+a {
+   background-color: #00995D;
+    color: #fff;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+    a:hover { background-color: #007f4c; }
+</style>
+</head>
+
+<body>
+
+<div class="form-container">
+
+<h2>Avaliação da Ouvidoria</h2>
+<p>Sua resposta é muito importante para avaliarmos a atuação da Ouvidoria e aprimorarmos nossos serviços, conforme as diretrizes da ANS.</p>
+
+<!-- Identificação -->
+<div class="question">
+<label>Identificação do beneficiário</label>
+<div class="options">
+<label><input type="radio" name="doc" onclick="toggleDoc('cpf')"> CPF</label>
+<label><input type="radio" name="doc" onclick="toggleDoc('cart')"> Carteirinha</label>
+</div>
+</div>
+
+<div class="question hidden" id="cpf">
+<label>CPF</label>
+<input type="text">
+</div>
+
+<div class="question hidden" id="cart">
+<label>Número da Carteirinha</label>
+<input type="text">
+</div>
+
+<!-- Período -->
+<div class="question">
+<label>Período do protocolo</label>
+<div class="period-box">
+<div>
+<label>Data inicial</label>
+<input type="date">
+</div>
+<div>
+<label>Data final</label>
+<input type="date">
+</div>
+</div>
+</div>
+
+<div class="protocol-box">
+<label>Selecione o protocolo</label>
+<select>
+<option>2024-001245</option>
+<option>2024-003781</option>
+<option>2024-006902</option>
+</select>
+</div>
+
+<div class="emoji-container">
+  <button type="button" class="emoji red" data-value="1">😡</button>
+  <button type="button" class="emoji orange" data-value="2">😕</button>
+  <button type="button" class="emoji yellow" data-value="3">😐</button>
+  <button type="button" class="emoji light-green" data-value="4">🙂</button>
+  <button type="button" class="emoji green" data-value="5">😄</button>
+</div><br>
+<input type="hidden" name="nivel_satisfacao" id="nivel_satisfacao" required>
+<small>(😡 Muito insatisfeito — 😄 Muito satisfeito)</small><br><br>
+
+
+
+<!-- Chips Negativo -->
+<div id="negativo" class="hidden">
+<label><strong>2. Quais foram os principais motivos da sua insatisfação?</strong>(Selecione todos que se aplicam)</label>
+<div class="chips">
+<div class="chip">Solicitação de Garantia de Atendimento</div>
+<div class="chip">Alteração de Prestador</div>
+<div class="chip">Indeferimento de Guia</div>
+<div class="chip chip-reanalise">Reanálise</div>
+<div class="chip">Atraso ou Problema no Reembolso</div>
+<div class="chip">Plano não Cobre Procedimento</div>
+<div class="chip">Insatisfação com Prestador</div>
+<div class="chip">Problemas com Autorização</div>
+<div class="chip">Insatisfação com Atendimento</div>
+<div class="chip">Demora para Liberação</div>
+<div class="chip">Outros motivos</div>
+</div>
+</div><br>
+
+<!-- Reanálise -->
+<div id="bloco-reanalise" class="hidden">
+<p><strong>Esta manifestação refere-se a reanálise assistencial? </strong>obrigatório REA</p>
+<label><input type="radio" name="rean" value="sim" required> Sim</label><br>
+<label><input type="radio" name="rean" value="nao"> Não</label><br>
+<label><input type="radio" name="rean" value="nao_sei"> Não sei</label><br>
+
+<div id="tipo-decisao" class="hidden">
+<p><strong>Tipo de decisão reanalisada</strong> obrigatório REA</p>
+<label><input type="radio" name="decisao" required> Indeferimento de cobertura</label><br>
+<label><input type="radio" name="decisao"> Indeferimento de exame</label><br>
+<label><input type="radio" name="decisao"> Reembolso</label><br>
+<label><input type="radio" name="decisao"> Outro</label>
+</div>
+</div>
+
+
+<!-- Chips Positivo -->
+<div id="positivo" class="hidden">
+<label><strong>2. Fatores que contribuíram para sua satisfação</strong> (selecione todos que se aplicam)</label>
+<div class="chips">
+<div class="chip">Demanda resolvida</div>
+<div class="chip">Cumprimento de prazo</div>
+<div class="chip">Clareza das informações</div>
+<div class="chip">Atendimento humanizado</div>
+<div class="chip">Boa condução do processo</div>
+<div class="chip">Cordialidade no atendimento</div>
+<div class="chip">Facilidade de comunicação</div>
+</div>
+</div>
+
+<p><strong>3. Como você classifica sua manifestação?</strong> Obrigatorio REA</p>
+<label><input type="radio" name="tipo_manifestacao" value="reclamacao" required> Reclamação</label><br>
+<label><input type="radio" name="tipo_manifestacao" value="solicitacao"> Solicitação</label><br>
+<label><input type="radio" name="tipo_manifestacao" value="denuncia"> Denúncia</label><br>
+<label><input type="radio" name="tipo_manifestacao" value="elogio"> Elogio</label><br>
+<label><input type="radio" name="tipo_manifestacao" value="sugestao"> Sugestão</label>
+
+<p><strong>4. Qual é o principal tema da sua manifestação?</strong> Obrigatorio REA</p>
+<label><input type="radio" name="tema_manifestacao" value="administrativo" required> Administrativo</label><br>
+<label><input type="radio" name="tema_manifestacao" value="cobertura"> Cobertura assistencial</label><br>
+<label><input type="radio" name="tema_manifestacao" value="financeiro"> Financeiro</label><br>
+<label><input type="radio" name="tema_manifestacao" value="rede"> Rede credenciada</label><br>
+<label><input type="radio" name="tema_manifestacao" value="sac"> Serviço de Atendimento (SAC)</label>
+
+<!-- Texto -->
+<br><br><div class="guidance-box">
+<label><strong>5. Caso deseje, utilize o espaço abaixo para registrar comentários, elogios, sugestões ou reclamações.</strong></label>
+</div>
+
+<textarea placeholder="Descreva sua manifestação..."></textarea>
+
+<p><strong>6. Por qual canal você entrou em contato com a Ouvidoria?</strong> Obrigatorio ter esse dado no REA</p>
+<label><input type="radio" name="canal_entrada" value="site" required> Site da operadora</label><br>
+<label><input type="radio" name="canal_entrada" value="email"> E-mail</label><br>
+<label><input type="radio" name="canal_entrada" value="telefone"> Telefone</label><br>
+<label><input type="radio" name="canal_entrada" value="presencial"> Atendimento presencial</label><br>
+<label><input type="radio" name="canal_entrada" value="app"> Aplicativo / redes sociais</label><br>
+<label><input type="radio" name="canal_entrada" value="outro"> Outro</label><br><br>
+
+
+<div class="question">
+<label>Telefone</label>
+<input type="tel">
+</div>
+
+<div class="question">
+<label>E-mail</label>
+<input type="email">
+</div>
+
+<button>Enviar Pesquisa</button>
+<br><br><br><a href="index.html">Voltar</a><br><br>
+
+</div>
+
+<script>
+function toggleDoc(id) {
+    document.getElementById('cpf').classList.add('hidden');
+    document.getElementById('cart').classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
+}
+
+const emojis = document.querySelectorAll('.emoji');
+const negativo = document.getElementById('negativo');
+const positivo = document.getElementById('positivo');
+const notaInput = document.getElementById('nivel_satisfacao');
+const blocoReanalise = document.getElementById('bloco-reanalise');
+const tipoDecisao = document.getElementById('tipo-decisao');
+const chipReanalise = document.querySelector('.chip-reanalise');
+
+emojis.forEach(emoji => {
+    emoji.addEventListener('click', () => {
+
+        // limpa todos
+        emojis.forEach(e => e.classList.remove('active'));
+
+        // ativa apenas o clicado
+        emoji.classList.add('active');
+
+        // grava valor
+        notaInput.value = emoji.dataset.value;
+    
+
+        // reset blocos
+        negativo.classList.add('hidden');
+        positivo.classList.add('hidden');
+        blocoReanalise.classList.add('hidden');
+        tipoDecisao.classList.add('hidden');
+
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+
+        // regra
+       const nota = Number(emoji.dataset.value);
+
+    if (nota <= 3) {
+        negativo.classList.remove('hidden');
+    } else {
+        positivo.classList.remove('hidden');
+    }
+
+    });
+});
+
+document.querySelectorAll('.chip:not(.chip-reanalise)').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('active'));
+});
+
+chipReanalise.addEventListener('click', () => {
+    chipReanalise.classList.toggle('active');
+    blocoReanalise.classList.toggle('hidden', !chipReanalise.classList.contains('active'));
+});
+
+document.querySelectorAll('input[name="rean"]').forEach(r => {
+    r.addEventListener('change', () => {
+        tipoDecisao.classList.toggle('hidden', r.value !== 'sim');
+    });
+});
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Pesquisa de Satisfação – Recepção</title>
+
+
+<style>
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f5;
+    color: #2E2E2E;
+}
+
+.form-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+h2 {
+    color: #00995D;
+    margin-bottom: 10px;
+}
+
+.question {
+    margin-bottom: 26px;
+}
+
+.question label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.hidden { display: none; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.period-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.protocol-box {
+    background: #f9f9f9;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 26px;
+}
+
+.emoji-container {
+    display: flex;
+    gap: 5rem; /* espaçamento entre emojis */
+    margin: 10px 0 20px 70px;
+}
+
+.emoji:hover {
+    filter: brightness(0.95);
+}
+
+
+.emoji {
+    font-size: 40px;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    opacity: 0.6;
+}
+
+.emoji.active {
+    opacity: 10;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: #00995D;
+}
+
+
+/* cores semânticas */
+.red { background: #f8d7da; }
+.orange { background: #ffe5b4; }
+.yellow { background: #fff3cd; }
+.light-green { background: #a0e5b0; }
+.green { background: #5cb170; }
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.chip {
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #00995D;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.chip.active {
+    background: #00995D;
+    color: #fff;
+}
+
+.guidance-box {
+    background: #f7f7f7;
+    border-left: 4px solid #00995D;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #00995D;
+    color: #fff;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.chip{
+padding:10px 14px;
+border-radius:20px;
+border:1px solid #00995D;
+cursor:pointer;
+}
+.chip.active{
+background:#00995D;
+color:#fff;
+}
+
+select{width:100%;padding:8px;margin-top:6px}
+
+a {
+   background-color: #00995D;
+    color: #fff;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+    a:hover { background-color: #007f4c; }
+</style>
+</head>
+
+<body>
+
+<div class="form-container">
+
+<h2>Pesquisa de Satisfação – Atendimento da Recepção</h2>
+
+
+<label>Canal de atendimento</label>
+<select id="canal">
+<option value="">Selecione</option>
+<option value="recepcao">Recepção</option>
+<option value="telefone">Telefone</option>
+<option value="app">Aplicativo</option>
+<option value="whatsapp">WhatsApp</option>
+<option value="site">Site</option>
+<option value="interno">Canais Internos</option>
+</select><br><br>
+
+
+<!-- Identificação -->
+<div class="question">
+<label>Identificação do beneficiário</label>
+<div class="options">
+<label><input type="radio" name="doc" onclick="toggleDoc('cpf')"> CPF</label>
+<label><input type="radio" name="doc" onclick="toggleDoc('cart')"> Carteirinha</label>
+</div>
+</div><br>
+
+<div class="question hidden" id="cpf">
+<label>CPF</label>
+<input type="text">
+</div>
+
+<div class="question hidden" id="cart">
+<label>Número da Carteirinha</label>
+<input type="text">
+</div>
+
+<!-- Período -->
+<div class="question">
+<label>Período do protocolo</label>
+<div class="period-box">
+<div>
+<label>Data inicial</label>
+<input type="date">
+</div>
+<div>
+<label>Data final</label>
+<input type="date">
+</div>
+</div>
+</div><br>
+
+<div class="protocol-box">
+<label>Selecione o protocolo</label>
+<select>
+<option>2024-001245</option>
+<option>2024-003781</option>
+<option>2024-006902</option>
+</select>
+</div><br>
+
+<!-- CSAT -->
+<div class="question">
+<label><strong>1. Como você avalia o atendimento da recepção?</strong> (Pergunta baseada no CSAT de 1 a 5)</label>
+
+<div class="emoji-container">
+<button type="button" class="emoji red" data-value="1">😡</button>
+<button type="button" class="emoji orange" data-value="2">🙁</button>
+<button type="button" class="emoji yellow" data-value="3">😐</button>
+<button type="button" class="emoji light-green" data-value="4">🙂</button>
+<button type="button" class="emoji green" data-value="5">😄</button>
+</div>
+
+<input type="hidden" id="nivel_satisfacao">
+</div>
+
+<!-- CHIPS -->
+<div id="chipsContainer" class="chips"></div><br><br>
+
+<!-- CES -->
+<div class="question">
+<label><strong>2. O atendimento resolveu sua necessidade?</strong> (Pergunta baseada no CES)</label>
+<div class="options">
+<label><input type="radio" name="idss_q1"> Não resolveu</label>
+<label><input type="radio" name="idss_q1"> Resolveu parcialmente</label>
+<label><input type="radio" name="idss_q1"> Resolveu, mas com dificuldades</label>
+<label><input type="radio" name="idss_q1"> Resolveu Adequadamente</label>
+<label><input type="radio" name="idss_q1"> Resolveu Completamente</label>
+</div>
+</div>
+
+<div class="question">
+<label><strong>3. As informações fornecidas foram claras e compreensíveis?</strong></label>
+<div class="options">
+<label><input type="radio" name="idss_q2"> Nada clara</label>
+<label><input type="radio" name="idss_q2"> Pouco clara</label>
+<label><input type="radio" name="idss_q2"> Razoavelmente clara</label>
+<label><input type="radio" name="idss_q2"> Clara</label>
+<label><input type="radio" name="idss_q2"> Muito claras</label>
+</div>
+</div>
+
+<div class="question">
+<label><strong>4. O tempo total de atendimento foi adequado?</strong></label>
+<div class="options">
+<label><input type="radio" name="idss_q3"> Muito demorado</label>
+<label><input type="radio" name="idss_q3"> Demorado</label>
+<label><input type="radio" name="idss_q3"> Adequado</label>
+<label><input type="radio" name="idss_q3"> Rápido</label>
+<label><input type="radio" name="idss_q3"> Muito rápido</label>
+</div>
+</div>
+
+<div class="question">
+<label><strong>5. Como você avalia a cordialidade e o respeito no atendimento?</strong></label>
+<div class="options">
+<label><input type="radio" name="idss_q4"> Muito insatisfatória</label>
+<label><input type="radio" name="idss_q4"> Insatisfatória</label>
+<label><input type="radio" name="idss_q4"> Regular</label>
+<label><input type="radio" name="idss_q4"> Boa</label>
+<label><input type="radio" name="idss_q4"> Excelente</label>
+</div>
+</div>
+
+<!-- NPS -->
+<div class="question"><br>
+<label><strong>3. De 0 a 10, quanto você recomendaria este atendimento?</strong> (Pergunta baseada no NPS)</label>
+<input type="range" min="0" max="10" value="5" id="nps">
+<span id="npsValue">5</span>
+</div>
+
+
+<!-- TEXTO -->
+<div class="question">
+<label>Comentário adicional (opcional)</label>
+<textarea></textarea>
+</div>
+
+<button>Enviar Pesquisa</button>
+<br><br><br><br><a href="index.html">Voltar</a><br><br>
+</div>
+
+<script>
+function toggleDoc(id){
+document.getElementById('cpf').classList.add('hidden');
+document.getElementById('cart').classList.add('hidden');
+document.getElementById(id).classList.remove('hidden');
+}
+
+const chipsPorCanal = {
+
+whatsapp: {
+neg: ["Demora na primeira resposta","Demora entre respostas","Preso no fluxo","Não entendeu minha solicitação", "Informações contraditórias" , "Transferência de atendente" , "Conversa encerrada sem solução" , "Linguagem pouco clara" , "Não resolveu a demanda" ],
+pos: ["Resposta rápida","Linguagem clara","Resolveu pelo canal","Atendimento objetivo","Orientação completa","Processo simples" ,"Agilidade na solução"]
+},
+
+telefone: {
+neg: ["Tempo de espera alto","Caiu a ligação","Muitas transferências","Atendente não soube orientar","Informação incorreta","Teve que ligar novamente","Não registrou protocolo","Não resolveu na ligação","Atendimento apressado"],
+pos: ["Resolveu na primeira ligação","Atendente muito cordial","Explicação clara","Segurança nas informações","Agilidade no atendimento","Registro correto do protocolo","Sem transferências","Acompanhou o caso"]
+},
+
+recepcao: {
+neg: ["Fila longa","Demora no atendimento","Prioridade não respeitada","Falta de organização","Informação divergente","Documentação mal explicada","Encaminhamento incorreto","Não resolveu no local","Atendimento frio","Falta de orientação"],
+pos: ["Atendimento rápido","Atendente atencioso","Boa organização","Orientação clara","Resolveu na hora","Encaminhamento correto","Processo bem explicado","Tratamento respeitoso"]
+},
+
+app: {
+neg: ["Aplicativo instável","Erro ao concluir solicitação","Difícil de navegar","Não encontrou a opção","Lentidão","Login com problema","Status não atualizado","Falta de instruções","Travamentos","Não resolveu digitalmente"],
+pos: ["Processo rápido","Fácil de usar","Conseguiu resolver sozinho","Navegação simples","Informações claras","Status atualizado","Status atualizado","Evitou contato humano"]
+},
+
+site: {
+neg: ["Informação difícil de achar","Conteúdo confuso","Links quebrados","Processo complexo","Lentidão","Formulário com erro","Linguagem técnica demais","Fluxo pouco intuitivo","Não resolveu online"],
+pos: ["Informação clara","Encontrou rapidamente","Processo simples","Formulário fácil","Conteúdo completo","Resolveu pelo site","Navegação intuitiva","Autoatendimento eficaz"]
+},
+
+interno: {
+neg: ["Demora na análise","Falta de retorno","Informação divergente entre setores","Reanálise desnecessária","Exigência excessiva de documentos","Prazo não cumprido","Status não atualizado","Encaminhamento incorreto","Não houve tratativa"],
+pos: ["Análise rápida","Retorno dentro do prazo","Parecer claro","Comunicação objetiva","Tratativa correta","Resolvido sem retrabalho","Integração entre setores","Transparência no status"]
+}
+
+};
+
+const emojis = document.querySelectorAll('.emoji');
+const canalSelect = document.getElementById("canal");
+const chipsContainer = document.getElementById("chipsContainer");
+const notaInput = document.getElementById('nivel_satisfacao');
+
+let notaSelecionada = null;
+
+function renderChips(){
+chipsContainer.innerHTML = "";
+
+const canal = canalSelect.value;
+if(!canal || !notaSelecionada) return;
+
+const grupo = notaSelecionada <= 3 ? "neg" : "pos";
+const lista = chipsPorCanal[canal][grupo];
+
+lista.forEach(texto=>{
+const chip = document.createElement("div");
+chip.className = "chip";
+chip.innerText = texto;
+chip.onclick = ()=> chip.classList.toggle("active");
+chipsContainer.appendChild(chip);
+});
+}
+
+/* clique emoji */
+
+emojis.forEach(emoji=>{
+emoji.onclick = ()=>{
+emojis.forEach(e=>e.classList.remove('active'));
+emoji.classList.add('active');
+
+notaSelecionada = Number(emoji.dataset.value);
+notaInput.value = notaSelecionada;
+
+renderChips();
+};
+});
+
+/* troca canal */
+
+canalSelect.onchange = renderChips;
+
+/* NPS */
+
+const nps=document.getElementById('nps');
+const npsValue=document.getElementById('npsValue');
+nps.oninput=()=>npsValue.innerText=nps.value;
+</script>
+
+</body>
+</html>

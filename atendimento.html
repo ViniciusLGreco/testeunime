@@ -30,6 +30,16 @@ h2 {
 .question {
     margin-bottom: 26px;
 }
+    .logo {
+    width: 120px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20em;
+}
+
 
 .question label {
     font-weight: 600;
@@ -212,9 +222,10 @@ a {
 <body>
 
 <div class="form-container">
-
-<h2>Pesquisa de Satisfação – Atendimento da Recepção</h2>
-
+<div class="header">
+    <h2>Pesquisa de Satisfação – Atendimento da Recepção</h2>
+    <img src="logo-unimed.png" alt="Unimed" class="logo">
+</div><br><br>
 
 <label>Canal de atendimento</label>
 <select id="canal">

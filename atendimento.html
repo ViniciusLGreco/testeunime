@@ -196,10 +196,7 @@ a {
 <option value="">Selecione</option>
 <option value="recepcao">Recepção</option>
 <option value="telefone">Telefone</option>
-<option value="app">Aplicativo</option>
-<option value="whatsapp">WhatsApp</option>
 <option value="site">Site</option>
-<option value="interno">Canais Internos</option>
 </select><br><br>
 
 
@@ -336,10 +333,6 @@ document.getElementById(id).classList.remove('hidden');
 
 const chipsPorCanal = {
 
-whatsapp: {
-neg: ["Demora na primeira resposta","Demora entre respostas","Preso no fluxo","Não entendeu minha solicitação", "Informações contraditórias" , "Transferência de atendente" , "Conversa encerrada sem solução" , "Linguagem pouco clara" , "Não resolveu a demanda" ],
-pos: ["Resposta rápida","Linguagem clara","Resolveu pelo canal","Atendimento objetivo","Orientação completa","Processo simples" ,"Agilidade na solução"]
-},
 
 telefone: {
 neg: ["Tempo de espera alto","Caiu a ligação","Muitas transferências","Atendente não soube orientar","Informação incorreta","Teve que ligar novamente","Não registrou protocolo","Não resolveu na ligação","Atendimento apressado"],
@@ -351,20 +344,11 @@ neg: ["Fila longa","Demora no atendimento","Prioridade não respeitada","Falta d
 pos: ["Atendimento rápido","Atendente atencioso","Boa organização","Orientação clara","Resolveu na hora","Encaminhamento correto","Processo bem explicado","Tratamento respeitoso"]
 },
 
-app: {
-neg: ["Aplicativo instável","Erro ao concluir solicitação","Difícil de navegar","Não encontrou a opção","Lentidão","Login com problema","Status não atualizado","Falta de instruções","Travamentos","Não resolveu digitalmente"],
-pos: ["Processo rápido","Fácil de usar","Conseguiu resolver sozinho","Navegação simples","Informações claras","Status atualizado","Status atualizado","Evitou contato humano"]
-},
 
 site: {
 neg: ["Informação difícil de achar","Conteúdo confuso","Links quebrados","Processo complexo","Lentidão","Formulário com erro","Linguagem técnica demais","Fluxo pouco intuitivo","Não resolveu online"],
 pos: ["Informação clara","Encontrou rapidamente","Processo simples","Formulário fácil","Conteúdo completo","Resolveu pelo site","Navegação intuitiva","Autoatendimento eficaz"]
 },
-
-interno: {
-neg: ["Demora na análise","Falta de retorno","Informação divergente entre setores","Reanálise desnecessária","Exigência excessiva de documentos","Prazo não cumprido","Status não atualizado","Encaminhamento incorreto","Não houve tratativa"],
-pos: ["Análise rápida","Retorno dentro do prazo","Parecer claro","Comunicação objetiva","Tratativa correta","Resolvido sem retrabalho","Integração entre setores","Transparência no status"]
-}
 
 };
 

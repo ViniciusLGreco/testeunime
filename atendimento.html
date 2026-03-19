@@ -238,6 +238,15 @@ a {
     text-decoration: none;
 }
     a:hover { background-color: #007f4c; }
+
+  .emoji-label {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+  }
+
+
 </style>
 </head>
 
@@ -306,13 +315,16 @@ a {
 <label><strong>1. Como você avalia o atendimento da recepção?</strong></label>
 
 <div class="emoji-container">
-<button type="button" class="emoji red" data-value="1">😡</button>
-<button type="button" class="emoji orange" data-value="2">🙁</button>
-<button type="button" class="emoji yellow" data-value="3">😐</button>
-<button type="button" class="emoji light-green" data-value="4">🙂</button>
-<button type="button" class="emoji green" data-value="5">😄</button>
+  <button type="button" class="emoji red" data-value="1">😡</button>
+  <button type="button" class="emoji orange" data-value="2">🙁</button>
+  <button type="button" class="emoji yellow" data-value="3">😐</button>
+  <button type="button" class="emoji light-green" data-value="4">🙂</button>
+  <button type="button" class="emoji green" data-value="5">😄</button>
 </div>
 
+<div id="emojiLabel" class="emoji-label">
+  Selecione uma opção
+</div>
 <input type="hidden" id="nivel_satisfacao">
 </div>
 
@@ -391,6 +403,39 @@ a {
 </div>
 
 <script>
+  const labels = [
+  "Muito ruim",
+  "Abaixo do esperado",
+  "Razoável",
+  "Acima do esperado",
+  "Muito bom"
+];
+
+const emojis = document.querySelectorAll('.emoji');
+const notaInput = document.getElementById('nivel_satisfacao');
+
+let notaSelecionada = null;
+
+emojis.forEach((emoji, index) => {
+  emoji.addEventListener("click", () => {
+
+    // remove seleção anterior
+    emojis.forEach(e => e.classList.remove("active"));
+
+    // ativa atual
+    emoji.classList.add("active");
+
+    // valor
+    notaSelecionada = Number(emoji.dataset.value);
+    notaInput.value = notaSelecionada;
+
+    // texto
+    document.getElementById("emojiLabel").textContent = labels[index];
+
+    renderChips();
+  });
+});
+
 function toggleDoc(id){
 document.getElementById('cpf').classList.add('hidden');
 document.getElementById('cart').classList.add('hidden');
@@ -421,12 +466,9 @@ pos: ["Informação clara","Encontrou rapidamente","Processo simples","Formulár
 
 };
 
-const emojis = document.querySelectorAll('.emoji');
+
 const canalSelect = document.getElementById("canal");
 const chipsContainer = document.getElementById("chipsContainer");
-const notaInput = document.getElementById('nivel_satisfacao');
-
-let notaSelecionada = null;
 
 function renderChips(){
 chipsContainer.innerHTML = "";
@@ -480,9 +522,9 @@ selectProtocolo.addEventListener("change", () => {
   <hr>
 
   <h4>Assunto</h4>
-  <p><strong>Tipo:</strong> Solicitação</p>
-  <p><strong>Categoria:</strong> Pedido de Autorização - Solicitação</p>
-  <p><strong>Categoria:</strong> Transcrição de Guias</p>
+  <p><strong>Tipo:</strong> Elogio</p>
+  <p><strong>Categoria:</strong> Outros</p>
+
   <hr>
 
   <h4>Dados do Atendimento</h4>

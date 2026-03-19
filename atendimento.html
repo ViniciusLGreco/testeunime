@@ -258,7 +258,7 @@ a {
     <img src="logo-unimed.png" alt="Unimed" class="logo">
 </div><br><br>
 
-<label><strong>Canal de atendimento</strong></label>
+<label><strong>Canal de atendimento<span style='color:red'>*</span></strong></label>
 <select id="canal">
 <option value="">Selecione</option>
 <option value="recepcao">Recepção</option>
@@ -269,7 +269,7 @@ a {
 
 <!-- Identificação -->
 <div class="question">
-<label>Identificação do beneficiário</label>
+<label>Identificação do beneficiário<span style='color:red'>*</span></label>
 <div class="options">
 <label><input type="radio" name="doc" onclick="toggleDoc('cpf')"> CPF</label>
 <label><input type="radio" name="doc" onclick="toggleDoc('cart')"> Carteirinha</label>
@@ -277,18 +277,18 @@ a {
 </div><br>
 
 <div class="question hidden" id="cpf">
-<label>CPF</label>
+<label>CPF<span style='color:red'>*</span></label>
 <input type="text">
 </div>
 
 <div class="question hidden" id="cart">
-<label>Número da Carteirinha</label>
+<label>Número da Carteirinha<span style='color:red'>*</span></label>
 <input type="text">
 </div>
 
 <!-- Período -->
 <div class="question">
-<label>Período do protocolo</label>
+<label>Período do protocolo<span style='color:red'>*</span></label>
 <div class="period-box">
 <div>
 <label>Data inicial</label>
@@ -304,7 +304,7 @@ a {
 <!-- Protocolo -->
 <div class="protocol-box">
 <select id="protocoloSelect">
-<option value="">Selecione</option>
+<option value="">Selecione<span style='color:red'>*</span></option>
 <option value="350099520240194839">350099520240194839</option>
 <option value="350099520240194838">350099520240194838</option>
 <option value="350099520240194837">350099520240194837</option>
@@ -312,7 +312,7 @@ a {
 
 <!-- CSAT -->
 <div class="question">
-<label><strong>1. Como você avalia o atendimento da recepção?</strong></label>
+<label><strong>1. Como você avalia o atendimento?<span style='color:red'>*</span></strong></label>
 
 <div class="emoji-container">
   <button type="button" class="emoji red" data-value="1">😡</button>
@@ -333,7 +333,7 @@ a {
 
 <!-- CES -->
 <div class="question">
-<label><strong>2. O atendimento resolveu sua necessidade?</strong></label>
+<label><strong>2. O atendimento resolveu sua necessidade?<span style='color:red'>*</span></strong></label>
 <div class="options">
 <label><input type="radio" name="idss_q1"> Não resolveu</label>
 <label><input type="radio" name="idss_q1"> Resolveu parcialmente</label>
@@ -344,7 +344,7 @@ a {
 </div>
 
 <div class="question">
-<label><strong>3. As informações fornecidas foram claras e compreensíveis?</strong></label>
+<label><strong>3. As informações fornecidas foram claras e compreensíveis?<span style='color:red'>*</span></strong></label>
 <div class="options">
 <label><input type="radio" name="idss_q2"> Nada clara</label>
 <label><input type="radio" name="idss_q2"> Pouco clara</label>
@@ -355,7 +355,7 @@ a {
 </div>
 
 <div class="question">
-<label><strong>4. O tempo total de atendimento foi adequado?</strong></label>
+<label><strong>4. O tempo total de atendimento foi adequado?<span style='color:red'>*</span></strong></label>
 <div class="options">
 <label><input type="radio" name="idss_q3"> Muito demorado</label>
 <label><input type="radio" name="idss_q3"> Demorado</label>
@@ -366,7 +366,7 @@ a {
 </div>
 
 <div class="question">
-<label><strong>5. Como você avalia a cordialidade e o respeito no atendimento?</strong></label>
+<label><strong>5. Como você avalia a cordialidade e o respeito no atendimento?<span style='color:red'>*</span></strong></label>
 <div class="options">
 <label><input type="radio" name="idss_q4"> Muito insatisfatória</label>
 <label><input type="radio" name="idss_q4"> Insatisfatória</label>
@@ -379,13 +379,13 @@ a {
 <!-- NPS -->
 <div class="question"><br>
     <label><strong>6. De 0 a 10, quanto você recomendaria este atendimento?</strong>
-    (0 = Nada provável | 10 = Extremamente provável)</strong></label>
+    (0 = Nada provável | 10 = Extremamente provável)<span style='color:red'>*</span></strong></label>
 <div class="nps-container" id="nps1"></div><br><br>
 
 
 <!-- TEXTO -->
 <div class="question">
-<label>Comentário adicional (opcional)</label>
+<label id="comentarioLabel">Comentário adicional</label>
 <textarea></textarea>
 </div>
 
@@ -413,24 +413,27 @@ a {
 
 const emojis = document.querySelectorAll('.emoji');
 const notaInput = document.getElementById('nivel_satisfacao');
+const comentarioLabel = document.getElementById("comentarioLabel");
 
 let notaSelecionada = null;
 
 emojis.forEach((emoji, index) => {
   emoji.addEventListener("click", () => {
 
-    // remove seleção anterior
     emojis.forEach(e => e.classList.remove("active"));
-
-    // ativa atual
     emoji.classList.add("active");
 
-    // valor
     notaSelecionada = Number(emoji.dataset.value);
     notaInput.value = notaSelecionada;
 
-    // texto
     document.getElementById("emojiLabel").textContent = labels[index];
+
+    // 🔴 regra do asterisco
+    if (notaSelecionada <= 2) {
+      comentarioLabel.innerHTML = "Comentário adicional <span style='color:red'>*</span> (obrigatório)";
+    } else {
+      comentarioLabel.textContent = "Comentário adicional (opcional)";
+    }
 
     renderChips();
   });

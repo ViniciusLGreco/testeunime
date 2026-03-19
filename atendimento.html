@@ -203,6 +203,28 @@ background:#00995D;
 color:#fff;
 }
 
+.modal-overlay {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  display: none; /* 🔴 começa escondido */
+  align-items:center;
+  justify-content:center;
+  z-index: 999;
+}
+
+.modal-overlay.show {
+  display: flex; /* 🔴 só aparece quando ativado */
+}
+
+.modal {
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  width:400px;
+}    
+
 select{width:100%;padding:8px;margin-top:6px}
 
 a {
@@ -271,13 +293,12 @@ a {
 </div><br>
 
 <div class="protocol-box">
-<label>Selecione o protocolo</label>
-<select>
-<option>2024-001245</option>
-<option>2024-003781</option>
-<option>2024-006902</option>
-</select>
-</div><br>
+<select id="protocoloSelect">
+<option value="">Selecione</option>
+<option value="350099520240194839">350099520240194839</option>
+<option value="350099520240194838">350099520240194838</option>
+<option value="350099520240194837">350099520240194837</option>
+</select></div><br>
 
 <!-- CSAT -->
 <div class="question">
@@ -358,6 +379,16 @@ a {
 <button>Enviar Pesquisa</button>
 <br><br><br><br><a href="index.html">Voltar</a><br><br>
 </div>
+
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <h3>Detalhes do Protocolo</h3>
+    <div id="modalContent"></div>
+    <br>
+    <button onclick="fecharModal()">Fechar</button>
+  </div>
+</div>
+    
 
 <script>
 function toggleDoc(id){
@@ -466,6 +497,69 @@ function criarNPS(containerId, outputId) {
 criarNPS("nps1", "npsValue1");
 criarNPS("nps2", "npsValue2");
 
+const selectProtocolo = document.getElementById("protocoloSelect");
+const modal = document.getElementById("modalOverlay");
+const modalContent = document.getElementById("modalContent");
+
+const dados = {
+  "350099520240194839": { data: "01/02/2024", canal: "Telefone", assunto: "Autorização" },
+  "350099520240194838": { data: "05/02/2024", canal: "Recepção", assunto: "Consulta" },
+  "350099520240194837": { data: "10/02/2024", canal: "Site", assunto: "Exames" }
+};
+
+selectProtocolo.addEventListener("change", () => {
+  const valor = selectProtocolo.value;
+
+  if (!valor) return;
+
+  const p = dados[valor];
+
+  modalContent.innerHTML = `
+  <h4>Dados do Beneficiário</h4>
+  <p><strong>Número da carteira:</strong> 02797501000637001</p>
+  <p><strong>Nome:</strong> Beneficiário Teste</p>
+  <p><strong>CPF:</strong> 06014083146</p>
+
+  <hr>
+
+  <h4>Dados para Contato</h4>
+  <p><strong>Telefone:</strong> 6699999999</p>
+  <p><strong>Celular:</strong> 6699999999</p>
+  <p><strong>E-mail:</strong> teste@gmail.com</p>
+  <p><strong>Canal preferencial:</strong> Celular</p>
+
+  <hr>
+
+  <h4>Assunto</h4>
+  <p><strong>Tipo:</strong> Elogio</p>
+  <p><strong>Categoria:</strong> Outros</p>
+
+  <hr>
+
+  <h4>Dados do Atendimento</h4>
+  <p><strong>Solicitação:</strong> Mensagem</p>
+  <p><strong>Descrição:</strong> Muito bom o atendimento</p>
+  `;
+
+  modal.classList.add("show");
+});
+
+function fecharModal(){
+  modal.classList.remove("show");
+}
+
+// fechar clicando fora
+modal.addEventListener("click", (e)=>{
+  if(e.target === modal) fecharModal();
+});
+
+// impedir fechar ao clicar dentro
+document.querySelector(".modal").addEventListener("click", (e)=>{
+  e.stopPropagation();
+});
+
+
+    
 </script>
 
 </body>

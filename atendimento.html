@@ -446,57 +446,6 @@ chipsContainer.appendChild(chip);
 });
 }
 
-/* clique emoji */
-
-emojis.forEach(emoji=>{
-emoji.onclick = ()=>{
-emojis.forEach(e=>e.classList.remove('active'));
-emoji.classList.add('active');
-
-notaSelecionada = Number(emoji.dataset.value);
-notaInput.value = notaSelecionada;
-
-renderChips();
-};
-});
-
-/* troca canal */
-
-canalSelect.onchange = renderChips;
-
-const colors = [
-  "#B72025","#D82028","#EE5223","#F36E23","#FAA723",
-  "#FFC828","#ECDC0D","#E8E73D","#C6D92F","#AFCF3D","#64B64F"
-];
-
-function criarNPS(containerId, outputId) {
-  const container = document.getElementById(containerId);
-  const output = document.getElementById(outputId);
-
-  for (let i = 0; i <= 10; i++) {
-    const btn = document.createElement("div");
-    btn.classList.add("nps-btn");
-    btn.style.background = colors[i];
-    btn.innerText = i;
-
-    btn.onclick = () => {
-      // remove seleção anterior
-      container.querySelectorAll(".nps-btn").forEach(b => b.classList.remove("selected"));
-
-      // marca atual
-      btn.classList.add("selected");
-
-      // atualiza valor
-      output.innerText = i;
-    };
-
-    container.appendChild(btn);
-  }
-}
-    // inicializa
-criarNPS("nps1", "npsValue1");
-criarNPS("nps2", "npsValue2");
-
 const selectProtocolo = document.getElementById("protocoloSelect");
 const modal = document.getElementById("modalOverlay");
 const modalContent = document.getElementById("modalContent");
@@ -558,9 +507,56 @@ document.querySelector(".modal").addEventListener("click", (e)=>{
   e.stopPropagation();
 });
 
+/* clique emoji */
 
-    
+emojis.forEach(emoji=>{
+emoji.onclick = ()=>{
+emojis.forEach(e=>e.classList.remove('active'));
+emoji.classList.add('active');
+
+notaSelecionada = Number(emoji.dataset.value);
+notaInput.value = notaSelecionada;
+
+renderChips();
+};
+});
+
+/* troca canal */
+
+canalSelect.onchange = renderChips;
+
+const colors = [
+  "#B72025","#D82028","#EE5223","#F36E23","#FAA723",
+  "#FFC828","#ECDC0D","#E8E73D","#C6D92F","#AFCF3D","#64B64F"
+];
+
+function criarNPS(containerId, outputId) {
+  const container = document.getElementById(containerId);
+  const output = document.getElementById(outputId);
+
+  for (let i = 0; i <= 10; i++) {
+    const btn = document.createElement("div");
+    btn.classList.add("nps-btn");
+    btn.style.background = colors[i];
+    btn.innerText = i;
+
+    btn.onclick = () => {
+      // remove seleção anterior
+      container.querySelectorAll(".nps-btn").forEach(b => b.classList.remove("selected"));
+
+      // marca atual
+      btn.classList.add("selected");
+
+      // atualiza valor
+      output.innerText = i;
+    };
+
+    container.appendChild(btn);
+  }
+}
+    // inicializa
+criarNPS("nps1", "npsValue1");
+
 </script>
-
 </body>
 </html>

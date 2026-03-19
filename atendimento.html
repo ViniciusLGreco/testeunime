@@ -450,12 +450,6 @@ const selectProtocolo = document.getElementById("protocoloSelect");
 const modal = document.getElementById("modalOverlay");
 const modalContent = document.getElementById("modalContent");
 
-const dados = {
-  "350099520240194839": { data: "01/02/2024", canal: "Telefone", assunto: "Autorização" },
-  "350099520240194838": { data: "05/02/2024", canal: "Recepção", assunto: "Consulta" },
-  "350099520240194837": { data: "10/02/2024", canal: "Site", assunto: "Exames" }
-};
-
 selectProtocolo.addEventListener("change", () => {
   const valor = selectProtocolo.value;
 
@@ -480,7 +474,7 @@ selectProtocolo.addEventListener("change", () => {
   <hr>
 
   <h4>Assunto</h4>
-  <p><strong>Tipo:</strong> Elogio</p>
+  <p><strong>Tipo:</strong> Solicitação</p>
   <p><strong>Categoria:</strong> Pedido de Autorização - Solicitação</p>
   <p><strong>Subcategoria:</strong> Transcrição de Guias</p>
   <hr>
